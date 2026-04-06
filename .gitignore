@@ -1,0 +1,8 @@
+sessions_dump.json
+*.o
+*.pyc
+__pycache__/
+.vercel/
+node_modules/
+.DS_Store
+*.log
