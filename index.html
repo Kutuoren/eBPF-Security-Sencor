@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>eBPF Security Sensor</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔬</text></svg>" />
+</head>
+<body>
+  <div class="root">
+
+    <div class="top-bar">
+      <span class="title">eBPF Security Sensor</span>
+      <span class="badge badge-live" id="sensor-status">● LIVE</span>
+      <span class="badge badge-neutral" id="probe-count">14 probes attached</span>
+      <span class="badge badge-neutral" id="uptime-badge">uptime: 0s</span>
+      <a href="https://github.com/yourusername/ebpf-sensor" target="_blank" class="gh-link">View on GitHub</a>
+    </div>
+
+    <div id="alert-container"></div>
+
+    <div class="metrics">
+      <div class="metric"><div class="metric-label">Events/sec</div><div class="metric-value" id="m-eps">0</div><div class="metric-sub">syscall events</div></div>
+      <div class="metric"><div class="metric-label">Active Sessions</div><div class="metric-value" id="m-sess">0</div><div class="metric-sub">tracked PIDs</div></div>
+      <div class="metric"><div class="metric-label">Alerts</div><div class="metric-value danger" id="m-alerts">0</div><div class="metric-sub">score &gt; 100</div></div>
+      <div class="metric"><div class="metric-label">Top Syscall</div><div class="metric-value small" id="m-top">—</div><div class="metric-sub">most frequent</div></div>
+    </div>
+
+    <div class="controls">
+      <button class="ctrl-btn active" onclick="toggleSim(this)">⏸ Pause</button>
+      <button class="ctrl-btn" onclick="injectAttack('recon')">Inject: Recon</button>
+      <button class="ctrl-btn" onclick="injectAttack('privesc')">Inject: PrivEsc</button>
+      <button class="ctrl-btn" onclick="injectAttack('fileless')">Inject: Fileless</button>
+      <button class="ctrl-btn" onclick="injectAttack('exfil')">Inject: Exfil</button>
+      <button class="ctrl-btn danger" onclick="clearAll()">Clear All</button>
+    </div>
+
+    <div class="panels">
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Live Syscall Feed</span>
+          <div class="filter-row">
+            <button class="ctrl-btn active" onclick="setFilter('all',this)">All</button>
+            <button class="ctrl-btn" onclick="setFilter('exec',this)">Exec</button>
+            <button class="ctrl-btn" onclick="setFilter('net',this)">Net</button>
+            <button class="ctrl-btn" onclick="setFilter('fs',this)">FS</button>
+            <button class="ctrl-btn" onclick="setFilter('priv',this)">Priv</button>
+          </div>
+        </div>
+        <div class="feed-header">
+          <span>TIME</span><span>PID</span><span>SYSCALL</span><span>ARGS</span><span>SCORE</span>
+        </div>
+        <div class="panel-body" id="event-feed"><div class="empty">Starting sensor…</div></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-head">
+          <span class="panel-title">Session Tracker</span>
+          <span id="sess-count" class="meta-text">0 sessions</span>
+        </div>
+        <div class="panel-body" id="session-list"><div class="empty">No sessions yet</div></div>
+      </div>
+    </div>
+
+    <div class="detail-panel" id="detail-panel" style="display:none">
+      <div class="detail-title">Session Detail</div>
+      <div id="detail-content"></div>
+    </div>
+
+    <div class="panel">
+      <div class="tabs">
+        <div class="tab active" onclick="switchTab('rules',this)">Detection Rules</div>
+        <div class="tab" onclick="switchTab('ebpf',this)">eBPF C Code</div>
+        <div class="tab" onclick="switchTab('python',this)">Python Loader</div>
+        <div class="tab" onclick="switchTab('setup',this)">Setup Guide</div>
+      </div>
+      <div class="tab-content active" id="tab-rules">
+        <div id="rules-list"></div>
+      </div>
+      <div class="tab-content" id="tab-ebpf">
+        <pre class="code-block" id="ebpf-code"></pre>
+      </div>
+      <div class="tab-content" id="tab-python">
+        <pre class="code-block" id="python-code"></pre>
+      </div>
+      <div class="tab-content" id="tab-setup">
+        <div class="setup-guide" id="setup-guide"></div>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <span>eBPF Security Sensor · Educational Demo</span>
+      <span>Requires Linux kernel 5.8+ · Run as root</span>
+    </footer>
+
+  </div>
+  <script src="sensor.js"></script>
+</body>
+</html>
