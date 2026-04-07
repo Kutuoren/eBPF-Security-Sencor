@@ -15,16 +15,32 @@
       <span class="badge badge-live" id="sensor-status">● LIVE</span>
       <span class="badge badge-neutral" id="probe-count">14 probes attached</span>
       <span class="badge badge-neutral" id="uptime-badge">uptime: 0s</span>
-      <a href="https://github.com/yourusername/ebpf-sensor" target="_blank" class="gh-link">View on GitHub</a>
+      <a href="https://github.com/yourusername/ebpf-sensor" target="_blank" class="gh-link">GitHub ↗</a>
     </div>
 
     <div id="alert-container"></div>
 
     <div class="metrics">
-      <div class="metric"><div class="metric-label">Events/sec</div><div class="metric-value" id="m-eps">0</div><div class="metric-sub">syscall events</div></div>
-      <div class="metric"><div class="metric-label">Active Sessions</div><div class="metric-value" id="m-sess">0</div><div class="metric-sub">tracked PIDs</div></div>
-      <div class="metric"><div class="metric-label">Alerts</div><div class="metric-value danger" id="m-alerts">0</div><div class="metric-sub">score &gt; 100</div></div>
-      <div class="metric"><div class="metric-label">Top Syscall</div><div class="metric-value small" id="m-top">—</div><div class="metric-sub">most frequent</div></div>
+      <div class="metric">
+        <div class="metric-label">Events/sec</div>
+        <div class="metric-value" id="m-eps">0</div>
+        <div class="metric-sub">syscall events</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Active Sessions</div>
+        <div class="metric-value" id="m-sess">0</div>
+        <div class="metric-sub">tracked PIDs</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Alerts</div>
+        <div class="metric-value danger" id="m-alerts">0</div>
+        <div class="metric-sub">score &gt; 100</div>
+      </div>
+      <div class="metric">
+        <div class="metric-label">Top Syscall</div>
+        <div class="metric-value small" id="m-top">—</div>
+        <div class="metric-sub">most frequent</div>
+      </div>
     </div>
 
     <div class="controls">
@@ -51,7 +67,9 @@
         <div class="feed-header">
           <span>TIME</span><span>PID</span><span>SYSCALL</span><span>ARGS</span><span>SCORE</span>
         </div>
-        <div class="panel-body" id="event-feed"><div class="empty">Starting sensor…</div></div>
+        <div class="panel-body" id="event-feed">
+          <div class="empty">Starting sensor…</div>
+        </div>
       </div>
 
       <div class="panel">
@@ -59,7 +77,9 @@
           <span class="panel-title">Session Tracker</span>
           <span id="sess-count" class="meta-text">0 sessions</span>
         </div>
-        <div class="panel-body" id="session-list"><div class="empty">No sessions yet</div></div>
+        <div class="panel-body" id="session-list">
+          <div class="empty">No sessions yet</div>
+        </div>
       </div>
     </div>
 
@@ -91,7 +111,7 @@
 
     <footer class="footer">
       <span>eBPF Security Sensor · Educational Demo</span>
-      <span>Requires Linux kernel 5.8+ · Run as root</span>
+      <span>Real sensor requires Linux kernel ≥ 5.8 and root access</span>
     </footer>
 
   </div>
